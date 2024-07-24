@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script>
+      var module = angular.module("myModule", []);
+      var controller = module.controller(
+        "myController",
+        function ($scope, $http) {
+          $scope.jsonAryobjects;
+          $scope.pickedcity = 0;
+          $scope.varField = 0;
+          $scope.modalobj;
+          $scope.dofetchAll = function () {
+            let url = "/fetch-all-influencer";
+            $http.get(url).then(noerr, err);
+            function noerr(resp) {
+              // alert(JSON.stringify(resp.data));
+              $scope.jsonAryobjects = resp.data;
+            }
+            function err(err) {
+              alert(err);
+            }
+          };
+          $scope.doSearch = function () {
+            let url = "/fetch-searched-influencer?name=" + $scope.fullname;
+            $http.get(url).then(noerr, err);
+            function noerr(resp) {
+              // alert(JSON.stringify(resp.data));
+              $scope.jsonAryobjects = resp.data;
+            }
+            function err(err) {
+              alert(err);
+            }
+          };
+
+          $scope.dofetchcities = function () {
+            let url = "/fetch-allcities-influencer";
+            $http.get(url).then(noerr, err);
+            function noerr(resp) {
+              // alert(JSON.stringify(resp.data));
+              $scope.jsonArycities = resp.data;
+            }
+            function err(err) {
+              alert(err);
+            }
+          };
+          $scope.dofetchonecities = function () {
+            let url = "/fetch-one-cities-influencer?field=" + $scope.varField;
+            $http.get(url).then(noerr, err);
+            function noerr(resp) {
+              // alert(JSON.stringify(resp.data));
+              $scope.jsonArycities = resp.data;
+            }
+            function err(err) {
+              alert(err);
+            }
+          };
+          $scope.fillbyfieldandcity=function()
+          {
+            let url =
+              "/fetch-filter-cities-field?field=" +
+              $scope.varField +
+              "&city=" +
+              $scope.pickedcity;
+
+            $http.get(url).then(noerr, err);
+            function noerr(resp) {
+            //   alert(JSON.stringify(resp.data)); 
+              $scope.jsonAryobjects = resp.data;
+            }
+            function err(err) {
+              alert(err);
+            }
+          }
+          $scope.fillbyfield=function()
+          {
+            let url =
+              "/fetch-filter-field?field=" +
+              $scope.varField;
+            $http.get(url).then(noerr, err);
+            function noerr(resp) {
+            //   alert(JSON.stringify(resp.data)); 
+              $scope.jsonAryobjects = resp.data;
+            }
+            function err(err) {
+              alert(err);
+            }
+          }
+          $scope.fillbycity=function()
+          {
+            let url =
+              "/fetch-filter-city?city="+$scope.pickedcity;
+            $http.get(url).then(noerr, err);
+            function noerr(resp) {
+            //   alert(JSON.stringify(resp.data)); 
+              $scope.jsonAryobjects = resp.data;
+            }
+            function err(err) {
+              alert(err);
+            }
+          }
+          $scope.dofiltercitiesandfields = function () {
+            if($scope.varField==0 && $scope.pickedcity!=0)
+            { 
+              $scope.fillbycity();
+              $scope.pickedcity=0;
+              return;
+            }
+            if( $scope.pickedcity==0 && $scope.varField!=0)
+            {
+              $scope.fillbyfield();
+              $scope.varField=0;
+              return;
+            }
+            else if($scope.pickedcity!=0 && $scope.varField!=0)
+            {
+              $scope.fillbyfieldandcity();
+              $scope.pickedcity=0;
+              $scope.varField=0;
+              return;
+            }
+          }
+        $scope.showinfo=function(index)
+        {
+            $scope.modalobj = $scope.jsonAryobjects[index];          
+        }
+  
+      });
+    </script>
+    <style>
+      body {
+        padding-top: 3%;
+        overflow-x: hidden;
+      }
+      .card-img-top {
+        width: 150px;
+        height: 150px;
+        background-size: contain;
+        margin: 0 auto;
+        display: block;
+        /* border: 2px solid black; */
+      }
+      .centeritems {
+        display: flex;
+        align-items: center; /* Vertical centering */
+        justify-content: center; /* Horizontal centering */
+      }
+      .profile-info {
+        overflow-wrap: break-word; /* Ensures long words break and wrap to the next line */
+        white-space: normal; 
+    }
+      
+    </style>
+  </head>
+  <body
+    ng-app="myModule"
+    ng-controller="myController"
+    ng-init="dofetchAll(); dofetchcities();"
+    >
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          style="cursor: pointer"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasExample"
+          ><b>☰</b>Filter by</a
+        >
+
+        <!-- Centered Search Form -->
+        <div class="mx-auto" style="width: 50%">
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search by Name"
+              ng-model="fullname"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline-success"
+              type="button"
+              ng-click="doSearch()"
+            >
+              Search
+            </button>
+          </form>
+          
+        </div>
+      <div ng-click="dofetchAll()" >
+        <a
+          class="navbar-brand"
+          style="cursor: pointer"
+          
+          >Clear filters</a
+        >
+    </div>
+    </form>
+    
+  </div>
+      </div>
+     
+    </nav>
+    <br>
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="row">
+          <div class="col-md-3 mt-3 mb-3" ng-repeat="obj in jsonAryobjects">
+            <div class="card">
+              <img
+                src="uploads/{{obj.picpath}}"
+                class="card-img-top rounded-circle mt-1"
+                alt="..."
+              />
+              <div class="card-body">
+                <p class="card-text">
+                  Name: {{obj.fname + " " + obj.lname}}
+                  <br />
+                  Gender: {{obj.gender}}
+                  <br />
+                  insta id: {{obj.instaid}}
+                </p>
+                <div class="centeritems">
+                  <input type="button" data-bs-toggle="modal" data-bs-target="#moreinfoModel"
+                         class="btn btn-primary" ng-click="showinfo($index);" value="More Info">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------------------------Side Filter Model----------------------------------------------------------------->
+
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasExample"
+      aria-labelledby="offcanvasExampleLabel"
+    >
+      <div class="offcanvas-header" style="width: 100%">
+        <div style="width: 100%">
+          <center>
+            <h3 style="color: black">
+              <i class="fa-solid fa-user fa-xl"></i> Hello,User
+            </h3>
+          </center>
+        </div>
+      </div>
+      <div class="offcanvas-body">
+        <h4>Filter by Field</h4>
+        <hr />
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="field"
+            value="Singing"
+            id="singingCheck"
+            ng-model="varField"
+            ng-change="dofetchonecities()"
+          />
+          <label class="form-check-label" for="singingCheck">Singing</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="field"
+            value="Dance"
+            id="danceCheck"
+            ng-model="varField"
+            ng-change="dofetchonecities()"
+          />
+          <label class="form-check-label" for="danceCheck">Dance</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="field"
+            value="BackstageDancer"
+            id="backstageDancerCheck"
+            ng-model="varField"
+            ng-change="dofetchonecities()"
+          />
+          <label class="form-check-label" for="backstageDancerCheck"
+            >Backstage Dancer</label
+          >
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="field"
+            value="Orcherstra"
+            id="orchestraCheck"
+            ng-model="varField"
+            ng-change="dofetchonecities()"
+          />
+          <label class="form-check-label" for="orchestraCheck">Orchestra</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="field"
+            value="DJ"
+            id="djCheck"
+            ng-model="varField"
+            ng-change="dofetchonecities()"
+          />
+          <label class="form-check-label" for="djCheck">DJ</label>
+        </div>
+
+        <br /><br />
+        <h4>Filter by City</h4>
+        <hr />
+      
+        <div class="form-check" ng-repeat="obj in jsonArycities">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="city"
+            id="{{obj.city}}"
+            value="{{obj.city}}"
+            ng-model="$parent.pickedcity"
+          />
+          <label class="form-check-label" for="{{obj.city}}">{{obj.city}}</label>
+        </div>
+            
+        <div class="centeritems">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            ng-click="dofiltercitiesandfields();">
+            Apply Filters
+          </button>
+        </div>
+      </div>
+    </div>
+    <!------------------------------------------Modal for more info----------------------------------------------------->
+  <!-- Modal -->
+  <div class="modal fade" id="moreinfoModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header centeritems">
+            <h5 class="modal-title" id="exampleModalLabel">Profile Details</h5>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col-4" >
+                <img src="uploads/{{modalobj.picpath}}" alt="Profile Picture" class="img-fluid rounded border">
+              </div>
+              <div class="col-8 profile-info">
+                <h5>{{modalobj.fullname}}</h5>
+                <hr style="margin: 0px;">
+                <br>
+                <font style="font-weight: 500;">Fields</font>
+                <p ">{{modalobj.fields}}</p>
+                
+              </div>
+            </div>
+            <form>
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label  class="col-form-label"><b>Email</b></label>
+                </div>
+                <div class="col-10">
+                  <input type="text"class="form-control" style="border: none;" value="{{modalobj.emailid}}"  readonly>
+                </div>
+              </div>
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label class="col-form-label"><b>Contact No.</b></label>
+                </div>
+                <div class="col-8">
+                  <input type="text"  class="form-control" style="border: none;" value="{{modalobj.contact}}"  readonly>
+                </div>
+              </div>
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label class="col-form-label"><b>DOB</b></label>
+                </div>
+                <div class="col-8">
+                  <input type="text"  class="form-control" style="border: none;" value="{{modalobj.dob}}"  readonly>
+                </div>
+              </div>
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label class="col-form-label"><b>City</b></label>
+                </div>
+                <div class="col-8">
+                  <input type="text"  class="form-control" style="border: none;" value="{{modalobj.city}}"  readonly>
+                </div>
+              </div>
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label class="col-form-label"><b>Address</b></label>
+                </div>
+                <div class="col-8">
+                  <input type="text"  class="form-control" style="border: none;" value="{{modalobj.address}}"  readonly>
+                </div>
+              </div> 
+            </form>
+            <div class="d-flex centeritems">
+              
+              <a href="https://www.instagram.com/{{modalobj.instaid}}" class="text-decoration-none me-3">
+                <i class="fa-brands fa-instagram fa-2x" style="color: #fb00ff;"></i>
+              </a>
+              <a href="{{modalobj.youtubeid}}" class="text-decoration-none">
+                <i class="fa-brands fa-youtube fa-2x" style="color: #fa0000;"></i>
+              </a>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </body>
+</html>

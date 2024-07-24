@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InfluencerGigs</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="script/indexjquery.js"></script>
+    <script src="script/indexloginjquery.js"></script>
+  <style>
+    body{
+      overflow-x: hidden;
+    }
+    .navbar-background {
+      padding: 1%;
+      background: white !important;
+    }
+
+    .fancy-text {
+      font-family: 'Pacifico', cursive;
+      font-size: x-large;
+      /* Adjust as needed */
+      color: #333;
+      /* Adjust as needed */
+      margin-left: 10px;
+      /* Space between logo and text */
+    }
+
+    .nav-link:hover {
+      color: blue;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+    .card {
+       
+      box-shadow: none; /* Removes any box shadow */
+      background-color: rgba(185, 185, 185, 0);;
+    }
+    .cardborder{
+      border: none;
+    }
+    .num{
+      border: 1px solid black;
+      /* width: ; */
+      border-radius: 70%;
+    }
+    .centeritems{
+            display: flex;
+            align-items: center; /* Vertical centering */
+            justify-content: center; /* Horizontal centering */
+        }
+    
+  </style>
+  <script>
+    
+  </script>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary  navbar-background">
+    <div class="container-fluid">
+      <img src="pics/Site-logo.jpg" id="logo" height="12%" width="16%" style="margin-left: 8%;">
+      <span>
+        <div style="margin-left: -15%;">
+          <div>
+            <span class="fancy-text">Influencer</span>
+          </div>
+          <div style="margin-top: -10%;">
+            <span class="fancy-text">Gigs</span>
+          </div>
+        </div>
+      </span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto" style="font-size: large; margin-right: 10%;">
+          <li class="nav-item">
+            <a class="nav-link " data-bs-toggle="modal" data-bs-target="#modalSignup">SignUp</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogin">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#ourServices" >Our Services</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " href="#ourTeam"> Our Team </a>
+          </li>
+          <li class="nav-item "> <a class="nav-link " href="#reachUs"> Reach US </a> </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Crousel -->
+  <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="10000">
+        <img src="pics/Crousel 1.jpg" class="d-block w-100" alt="..."  style="height: 75vh;">
+      </div>
+      <div class="carousel-item" data-bs-interval="10000">
+        <img src="pics/Crousel 2.jpg" class="d-block w-100" alt="..."  style="height: 75vh;">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+<!-- Our Services Cards -->
+<div class="row" style="background-color:  rgba(185, 185, 185, 0.116);" id="ourServices">
+<div class="col-md-10 offset-md-1">
+  <div class="row mt-2" >
+    <div class="col-md-4">
+      <div class="card cardborder">
+        <div class="card-body">
+          <h5 class="card-title"><span class="num">&nbsp;1&nbsp;</span>&nbsp;Find Clients</h5>
+          <p class="card-text">Discover potential clients looking for influencers like you. Use our comprehensive search to connect with brands and businesses that align with your niche and expertise.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card cardborder">
+        <div class="card-body">
+          <h5 class="card-title"><span class="num">&nbsp;2&nbsp;</span>&nbsp;Find Influencers</h5>
+          <p class="card-text"> Discover the perfect influencers to represent your brand. Use our comprehensive search and filter tools to find influencers that align with your brand values and target audience.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card cardborder">
+        <div class="card-body">
+          <h5 class="card-title"><span class="num">&nbsp;3&nbsp;</span>&nbsp;Track Events</h5>
+          <p class="card-text">Keep track of all your events in one place. Get detailed analytics and insights to measure the success of your campaigns and engagements.</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<div style="height: 5%;" class="centeritems mt-2" id="ourTeam"><b>OUR TEAM</b></div>
+<div class="row mt-3">
+  <div class="col-md-10 offset-md-1">
+      <div class="row" >
+          <div class="col-md-6">
+            <div class="card mb-3 " style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="pics/outeam-Sir.jpeg" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">Rajesh Bansal</h5>
+                    <p class="card-text">Founder of Banglore Computer Edu.
+                    <br>Author of book "REAL JAVA"</p>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mb-3 " style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="pics/ourteamme1.jpg" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">Sanchit Singla</h5>
+                    <p class="card-text"><strong>Web Developer</strong>
+                      <br>Email id: sanchitmansa12@gmail.com<br>
+                    I have made this project under guidance of Rajesh Bansal sir</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+<div style="height: 5%;" class="centeritems mt-2" id="reachUs"><b>Reach US</b></div>
+<div class="centeritems"><iframe  style = "height: 40%; width: 50%;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1714.172510401916!2d76.78549524696683!3d30.764894579220286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ff282845c404b%3A0xc0844bf7cbdcc6e9!2sPunjab%20Engineering%20College!5e0!3m2!1sen!2sin!4v1721206968712!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+
+<div style="background-color: gainsboro;" class="mt-4 centeritems">
+  <div style="float: left;">© 2024-2025 InfluencerGigs. All rights reserved</div>     
+</div>
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body newmodal centeritems">
+        
+      </div>
+      <div class="modal-footer centeritems">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <!------------------------------- loginModal--------------------------------- -->
+        <div class="modal fade" id="modalLogin" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="modalLoginLabel" style="margin: auto;"><center>Welcome Back</center></h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="loginForm">
+                          <div class="mb-3">
+                              <label for="txtloginEmail" class="form-label">Email address</label>&nbsp;<i class="fal fa-asterisk" style="color: #f50000;"></i>
+                              <input type="email" name="txtloginEmail" class="form-control" id="txtloginEmail" aria-describedby="loginEmailHelp" required>
+                              <div id="loginEmailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                              <div id="errloginEmail"></div>
+                          </div>
+                          <div class="mb-3 position-relative">
+                              <label for="txtloginPwd" class="form-label">Password</label>&nbsp;<i class="fal fa-asterisk" style="color: #f50000;"></i>
+                              <input type="password" name="txtloginPwd" class="form-control" id="txtloginPwd" required>
+                              <i class="fa-solid fa-eye position-absolute" id="eyelogin" style="top: 45px; right: 10px; cursor: pointer;"></i>
+                          </div>
+                          
+                            <span style="color: blue;" id="forgotPwd" onclick="forgotPassword();">
+                              Forgot password?
+                            <span>
+                              <br>
+                              <br>
+                          <div class="text-center">
+                              <button type="button" id="btnLogin" class="btn btn-primary">Login</button>    
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+
+
+            <!---------------------------------SignUp Modal---------------------->
+  <div class="modal fade" data-bs-backdrop="static" id="modalSignup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+        
+          <h1 class="modal-title fs-5" id="exampleModalLabel" style="margin: auto;">New Registration</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="mb-3">
+                  <label for="txtsignupEmail" class="form-label">Email address</label>&nbsp;<i class="fal fa-asterisk" style="color: #f50000;"></i>
+                  <input type="email" name="txtsignupEmail" class="form-control" id="txtsignupEmail" aria-describedby="emailHelp">
+                  <div id="emailHelp" class="form-text">We'll never share your credentials with anyone else.</div>
+                  <div id="txtvalidEmail" > </div>
+                  <div id="errEmail" style="padding-left: 150px;"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>&nbsp;<i class="fal fa-asterisk" style="color: #f50000;"></i>
+                  <input type="password" name="txtsignupPwd" class="form-control" id="txtsignupPwd"><span style="float: right; margin-top: -30px; margin-right: 5px;"><i class="fa-solid fa-eye"  id="eye"></i></span>
+                  <div id="txtvalidPwd"></div>
+                </div>
+                
+                <div>
+                    <div class="mb-3">
+                        <label for="comboSignup" class="form-label">Are You:</label>&nbsp;<i class="fal fa-asterisk" style="color: #f50000;"></i>
+                        <select id="comboSignup" name="comboSignup" class="form-select">
+                            <option value="Select">Select</option>
+                            <option value="Influencer">Influencer</option>
+                            <option value="Customer">Customer</option>   
+                        </select>
+                      </div>  
+                <br>
+            <div>
+                <center>
+                    <button type="button" id="btnSignup" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign Up</button>
+                </center>
+            </div>        
+            </form>
+        </div>
+        
+      </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Console</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <script>
+        let module=  angular.module("myModule",[]);
+        let controller = module.controller("myController",function($scope,$http){
+            $scope.resultJsonArrayInflu;
+            $scope.dofetchAll = function()
+            {
+                // alert();
+                let url = "/fetch-all-influencer";
+                $http.get(url).then(noerr,err);
+                function noerr(resp)
+                {   
+                    // alert(JSON.stringify(resp.data));
+                    $scope.resultJsonArrayInflu = resp.data;
+                }
+                function err(err)
+                {
+                    alert(err);
+                }
+            }
+            $scope.doSearch = function(emailtosearch)
+            {
+                // alert(emailtosearch);
+                let url = "/fetch-searched-iprofile?email="+emailtosearch;
+                $http.get(url).then(noerr,err);
+                function noerr(resp)
+                {   
+                    $scope.resultJsonArrayInflu =  resp.data;
+                        
+                }
+                function err(err)
+                {
+                    alert(err);
+                }
+            }
+        });
+    </script>
+</head>
+<body ng-app="myModule" ng-controller="myController" ng-init="dofetchAll()">
+
+        <h2 class="text-center ">Influencer Details</h2>
+        <div class="row  mt-5"></div>
+    <div class="col-md-6 offset-md-3" >
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="search" placeholder="name@example.com">
+            <button class="btn btn-outline-secondary" type="button"  ng-click="doSearch(search)">Search</button>
+        </div>
+    </div>
+        <table class="table table-striped table-bordered mt-4">
+            <thead>
+                <tr class="table-info">
+                    <th>S.No</th>
+                    <th>Email Id</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>ZipCode</th>
+                    <th>Contact No.</th>
+                    <th>Fields</th>
+                    <th>InstaID</th>
+                    <th>YoutubeID</th>
+                    <th>Others</th>
+                    <th>Profile Pic</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="obj in resultJsonArrayInflu">
+                    <td>{{$index+1}}</td>
+                    <td>{{obj.emailid}}</td>
+                    <td>{{obj.fname}}{{" "+obj.lname}}</td>
+                    <td>{{obj.gender}}</td>
+                    <td>{{obj.dob}}</td>
+                    <td>{{obj.address}}</td>
+                    <td>{{obj.city}}</td>
+                    <td>{{obj.zipcode}}</td>
+                    <td>{{obj.contact}}</td>
+                    <td>{{obj.fields}}</td>
+                    <td>{{obj.instaid}}</td>
+                    <td>{{obj.youtubeid}}</td>
+                    <td>{{obj.others}}</td>
+                    <td><img src="uploads/{{obj.picpath}}" class="profile-pic" alt="Profile Pic"></td>
+                </tr>
+            </tbody>
+        </table>
+        <center><button class="btn btn-primary" ng-click="dofetchAll();">Show All Data</button></center>
+</body>
+</html>

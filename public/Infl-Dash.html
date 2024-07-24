@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+        body{
+            
+          overflow-x: hidden;
+        }            
+        .centeritems{
+            display: flex;
+            align-items: center; /* Vertical centering */
+            justify-content: center; /* Horizontal centering */
+        }
+        .nav-link:hover{
+            cursor: pointer;
+            color: blue;
+            border: 2px solid black;
+        }
+    </style>
+    <script>
+      $(document).ready(function(){
+        let ActiveUser = localStorage.getItem("ActiveUser");
+        $("#inputEmail").val(ActiveUser).prop("readonly",true).css("background-color","#EBEBE4");
+        $("#txtEmail").val(ActiveUser).prop("readonly",true).css("background-color","#EBEBE4"); 
+
+        $("#btnLogout").click(function()
+        {     
+            // alert();
+            ActiveUser = null;
+            localStorage.setItem("ActiveUser","");
+            location.href = "index.html";
+
+        });
+
+          $("#btnPost").click(function()
+          {     
+                // alert();
+                    let obj={
+                        type:"get",
+                        url:"/insert-influencer-booking",
+                        data:{
+                            emailid :$("#inputEmail").val(),
+                            eventtitle :$("#inputtitle").val(),
+                            doe : $("#inputdate").val(),
+                            tos:$("#inputtime").val(),
+                            city: $("#inputcity").val(),
+                            venue: $("#inputvenue").val()
+                        }
+                    }
+            
+            $.ajax(obj).done(function(resp){
+              alert(resp);
+            }).fail(function(err){
+              alert(err.statusText);
+            });
+          });
+          $("#confirmPassword").blur(function(){
+            // alert();
+              let confirmPassword = $(this).val();
+              let newPassword = $("#newPassword").val();
+              if(confirmPassword != newPassword)
+              {
+                  $("#errPassword").html("password doesnot match with new password");
+                  $("#errPassword").css("color","red");
+              }
+              else
+              {
+                $("#errPassword").html("");
+              }
+          });
+          $("#newPassword").blur(function () {
+            // alert();
+          let check = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+          let pwdval = $(this).val();
+          if ((check.test(pwdval))) {
+            $("#errvalidPwd").html("");
+            }
+            else
+            {
+              $("#errvalidPwd").html("fill strong password");
+              $("#errvalidPwd").css("color","red");
+            }
+          });
+          $("#btnUpdate").click(function(){
+          {
+            let errvalidPwd = $("#errvalidPwd").html();
+            let errPwd = $("#errPassword").html();
+            let oldvalue = $("#oldPassword").val();
+            let newvalue = $("#newPassword").val();
+            if(errPwd != "" || errPwd != "" || oldvalue == "" || newvalue == "")
+            {
+                alert("Enter Valid Data");
+                return;
+            }
+            
+            let obj={
+                  type:"get",
+                  url:"/user-change-password",
+                  data:{
+                        email : $("#txtEmail").val(),
+                        pwd:$("#oldPassword").val(),
+                        newpwd:$("#newPassword").val()
+                        }
+                    }
+            
+                   $.ajax(obj).done(function(resp){
+                    alert(resp);
+                  }).fail(function(err){
+                  alert(err);
+                  });
+          }
+      });
+    });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" >
+  <a class="navbar-brand" href="index.html#logo" style="width: 5%; margin-left: 4%;">
+    <img src="pics/Site-Logo-transparent.png" class="img-fluid" alt="Logo">
+  </a>
+    <div class="container-fluid">
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="index.html#ourTeam">Our Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html#reachUs">Reach us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html#ourServices">Our Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " id="btnLogout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+  <div class="row mt-5" >
+    <div class="col-md-10  offset-md-2">
+        <div class="row">
+            <div class="col-md-3  mb-3" style="margin-top: 5px;">
+                <div class="card" >
+                    <img src="pics/Profile pic.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text" >Click on the 'Profile' button to easily update or fill in your personal information and keep your profile up-to-date.</p>
+                        <div class="centeritems"><a href="/to-influencer-profile" class="btn btn-primary">Profile</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3  mb-3" style="margin-top: 5px;">
+                <div class="card">
+                    <img src="pics/event.jpg" class="card-img-top" alt="">
+                    <div class="card-body">
+                      <p class="card-text" >Eliminate double-booking headaches! Post your bookings to keep everyone on the same page.</p>
+                      <div class="centeritems"><button class="btn btn-primary" style="margin: 2px;"  data-bs-toggle="modal" data-bs-target="#modalPostbookings">Post Bookings</button>
+                      <a href="/event-manager"><button class="btn btn-secondary" style="margin: 2px;">Event Manager</button></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3  mb-3" style="margin-top: 5px;">
+              <div class="card" >
+                <center>
+                  <div style="width: 72%;" class="mt-1">
+                    <center>
+                      <img src="pics/settings.jpg" class="card-img-top" alt="">
+                    </center>
+                  </div>  
+                </center>
+                  <div class="card-body">
+
+                      <p class="card-text">To change your password, click the Settings button below.</p>
+                      <div class="centeritems"><button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#modalSettings">Settings</button></div>
+                  </div>
+              </div>
+            </div>
+        </div>    
+    </div>
+</div>
+
+
+
+
+
+
+
+
+        <!-------------------------Bookings Model---------------------------->
+        <div class="modal fade" id="modalPostbookings"data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel" style="margin: auto;">Schedule Event</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form class="row g-3">
+                  <div class="col-md-12">
+                    <label for="inputEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Enter Email Id">
+                  </div>
+                  
+                  <div class="col-12">
+                    <label for="inputtitle" class="form-label">Event Title</label>
+                    <input type="text" class="form-control" id="inputtitle" name="inputtitle" placeholder="Title">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputdate" class="form-label">Date</label>
+                    <input type="Date" class="form-control" id="inputdate" name="inputdate">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputtime" class="form-label">Start Time</label>
+                    <input type="time" class="form-control" id="inputtime"  name="inputtime">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputcity" class="form-label">City</label>
+                    <input type="text" class="form-control" id="inputcity" name="inputcity" placeholder="City/Place">
+                  </div>
+                  <div class="col-12">
+                    <label for="inputvenue" class="form-label">Venue</label>
+                    <input type="text" class="form-control" id="inputvenue" name="inputvenue" placeholder="Venue of Event">  
+                  </div>
+              </div>
+              <div class="modal-footer centeritems">
+                <button type="button" id="btnPost"class="btn btn-primary">Post Event</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+        <!---------------------------Settings Model------------------------------------>
+        <div class="modal fade" id="modalSettings"data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel" style="margin: auto;">Settings</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="row">
+                  <div class="col-md-10 offset-md-1">
+                    <label for="txtEmail" class="form-label" style="margin: 0px;">Email</label>
+                    <input type="email" class="form-control" id="txtEmail">
+                  </div>
+                  <br><br><br>
+                  <div class="col-md-10 offset-md-1">
+                    <label for="oldPassword" class="form-label"  style="margin: 0px;">Old Password</label>
+                    <input type="password" class="form-control" id="oldPassword">
+                  </div>
+                  <br><br><br>
+                  <div class="col-md-10 offset-md-1">
+                    <label for="newPassword" class="form-label"  style="margin: 0px;">New Password</label>
+                    <input type="password" class="form-control" id="newPassword">
+                    <div id="errvalidPwd" class="centeritems">
+                    </div>
+                    
+                  </div>
+                  <br><br><br>
+                  <div class="col-md-10 offset-md-1">
+                    <label for="confirmPassword" class="form-label"  style="margin: 0px;">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword">
+                    <div id="errPassword" class="centeritems">
+                    </div>
+                  </div>
+
+                </div>   
+                <br>            
+                  <div class="modal-footer centeritems">
+                    <button type="button" id="btnUpdate"class="btn btn-primary" >Update</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+</body>
+</html>
