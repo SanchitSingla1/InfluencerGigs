@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Profile</title>
     <style>
-        .centeritems{
+       .centeritems{
             display: flex;
             align-items: center; /* Vertical centering */
-            justify-content:center; /* Horizontal centering */
-            
-       }
+            justify-content: center; /* Horizontal centering */
+        }
        .nav-link:hover {
       color: blue;
       border: 1px solid black;
@@ -22,7 +21,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
-        
+        function docheck()
+        {
+            if
+            ($("#firstName").val() == "" ||$("#lastName").val() == ""||$("input[name='gender']:checked").val() == ""||$("#city").val() == ""||$("#state").val() == ""|| $("#contactNumber").val() == ""|| $("#ctype").val() == "")
+            {
+                return true;
+            }
+            return false;
+            
+        }
         $(document).ready(function(){
             let active = localStorage.getItem("ActiveUser");
             let obj = {
@@ -67,6 +75,12 @@
                 });
                 $("#btnSubmit").click(function(){
                     // alert($("#contactnumber").val());
+                    let ans = docheck();
+                    if(ans)
+                    {
+                        $(".newmodal").html("Fill All Details Correct").css("color","red");
+                        return;
+                    }
                     let obj1={
                     type:"GET",
                     url:"/send-cprofile-details-to-sql",
@@ -83,12 +97,18 @@
                 }
                 $.ajax(obj1).done(function(resp){
                     if(resp)
-                       alert(resp);
+                    $(".newmodal").html(resp).css("color","green");
                 }).fail(function(err){
                     alert(JSON.stringify(err));
                 });
                 });
                 $("#btnUpdate").click(function(){
+                    let ans = docheck();
+                    if(ans)
+                    {
+                        $(".newmodal").html("Fill All Details Correct").css("color","red");
+                        return;
+                    }
                     // alert($("#contactnumber").val());
                     let obj1={
                     type:"GET",
@@ -106,7 +126,7 @@
                 }
                 $.ajax(obj1).done(function(resp){
                     if(resp)
-                       alert(resp);
+                    $(".newmodal").html(resp).css("color","green");
                 }).fail(function(err){
                     alert(JSON.stringify(err));
                 });
@@ -196,10 +216,26 @@
                 </div>
             </div>
             <div class="centeritems mt-2">
-                <button type="button" id="btnSubmit" class="btn btn-primary" style="margin: 10px;">Submit</button>
-                <button type="button" id="btnUpdate"  class="btn btn-secondary"  style="margin: 10px;">Update</button>
+                <button type="button" id="btnSubmit" class="btn btn-primary" style="margin: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Submit</button>
+                <button type="button" id="btnUpdate"  class="btn btn-secondary"  style="margin: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
             </div>
         </form>
     </div>
+
+
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body newmodal centeritems">
+          
+        </div>
+        <div class="modal-footer centeritems">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

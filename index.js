@@ -7,13 +7,11 @@ app.use(express.urlencoded(true));
 app.use(fileuploader());
 var mysql2 = require("mysql2");
 let config = {
-  host: "bfdugplpcosdptsoacoz-mysql.services.clever-cloud.com",
-  user: "uycmes4mql8ou8rt",
-  password: "faQvP1yMEJ05xjqOyHdF",
-  database: "bfdugplpcosdptsoacoz",
-  dateStrings: true,
-  keepAliveInitialDelay:10000,
-  enableKeepAlive: true,
+    host:"127.0.0.1",
+    user:"root",
+    password:"Sanchit123#",
+    database:"project",
+    dateStrings:true
 };
 var mysql = mysql2.createConnection(config);
 app.use(express.urlencoded(true));
@@ -141,7 +139,7 @@ app.post("/send-pofile-details-to-sql", function (req, resp) {
       others,
     ],
     function (err) {
-      if (err == null) resp.send("Data Saved to SQL");
+      if (err == null) resp.sendFile(path + "/public/influ-profile-data-saved.html");
       else resp.send(err.message);
     }
   );
@@ -178,7 +176,11 @@ app.post("/update-pofile-details-to-sql", function (req, resp) {
   if (Array.isArray(fields)) {
     str = "";
     for (i = 0; i < fields.length; i++) {
-      str += fields[i] + ",";
+      str += fields[i];
+      if(i != fields.length - 1)
+      {
+        str = str + ",";
+      }
     }
   } else str = fields;
   let instaid = req.body.instagramId;
@@ -216,7 +218,7 @@ app.post("/update-pofile-details-to-sql", function (req, resp) {
         //no error
         if (result.affectedRows >= 1) {
           // resp.send(result);
-          resp.send("Your Data Updated");
+          resp.sendFile(path + "/public/influ-profile-data-Updated.html");
         } else resp.send("Invalid Email ID");
       } else resp.send(err.message);
     }
@@ -229,15 +231,31 @@ app.get("/insert-influencer-booking", function (req, resp) {
   let tos = req.query.tos;
   let city = req.query.city;
   let venue = req.query.venue;
-  // console.log(/eventtile);
-  mysql.query(
-    "insert into events(emailid, eventtitle, doe, tos, city, venue) values(?,?,?,?,?,?)",
-    [emailid, eventtitle, doe, tos, city, venue],
-    function (err) {
-      if (err == null) resp.send("Data Saved");
-      else resp.send(err.message);
-    }
-  );
+
+  mysql.query("select * from events where doe = ? and tos = ?", [doe, tos], function(err, resultArray) {
+      if (err) {
+          // Handle the error and send the response
+          return resp.send("Database query error");
+      }
+
+      if (resultArray.length >= 1) {
+          // Send response if the event already exists
+          return resp.send("Event Already Exists");
+      }
+
+      // If no event exists, proceed with inserting the new event
+      mysql.query(
+          "insert into events(emailid, eventtitle, doe, tos, city, venue) values(?,?,?,?,?,?)",
+          [emailid, eventtitle, doe, tos, city, venue],
+          function (err) {
+              if (err) {
+                  return resp.send(err.message);
+              }
+              // Send response after successful insertion
+              return resp.send("Congratulations, Your Event Has Been Posted");
+          }
+      );
+  });
 });
 app.get("/user-change-password", function (req, resp) {
   let email = req.query.email;
@@ -304,8 +322,23 @@ app.get("/forgot-user-password", function (req, resp) {
     }
   );
 });
-app.get("/Admin-dash",function(req,resp){
-    resp.sendFile(path + "/public/Admin-Dash.html");
+app.get("/admin",function(req,resp){
+    resp.sendFile(path + "/public/admin-check.html");
+});
+app.get("/check-for-admin",function(req,resp)
+{
+    let email = req.query.email;
+    let pwd = req.query.pwd;
+    // console.log(body);
+    if(email == "Admin@gmail.com" && pwd == "admin123!@#")
+    {   
+        resp.send(true);
+        
+    }
+    else
+    {
+      resp.send(false);
+    }
 });
 app.get("/all-user-record",function(req,resp){
   resp.sendFile(path + "/public/Admin-Users.html");
@@ -534,7 +567,7 @@ app.get("/send-cprofile-details-to-sql",function(req,resp){
     "insert into cprofile values(?,?,?,?,?,?,?,?,?)",
     [email,firstname,lastname,fullname,gender,city,mobile,state,org],
     function (err) {
-      if (err == null) resp.send("Data Saved to SQL");
+      if (err == null) resp.send("Your Profile Data Saved");
       else resp.send(err.message);
     }
   );
@@ -554,7 +587,7 @@ app.get("/update-cprofile-details-to-sql",function(req,resp){
     "update  cprofile set fname = ?, lname = ?, fullname=?, gender=?, city = ?, mobile=?, state=?, org = ? where emailid = ?",
     [firstname,lastname,fullname,gender,city,mobile,state,org,email],
     function (err) {
-      if (err == null) resp.send("Data Updated to SQL");
+      if (err == null) resp.send("Your Profile Data Updated");
       else resp.send(err.message);
     }
   );
