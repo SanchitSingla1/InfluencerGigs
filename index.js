@@ -7,12 +7,15 @@ app.use(express.urlencoded(true));
 app.use(fileuploader());
 var mysql2 = require("mysql2");
 let config = {
-    host:"127.0.0.1",
-    user:"root",
-    password:"Sanchit123#",
-    database:"project",
-    dateStrings:true
+  host: "bfdugplpcosdptsoacoz-mysql.services.clever-cloud.com",
+  user: "uycmes4mql8ou8rt",
+  password: "faQvP1yMEJ05xjqOyHdF",
+  database: "bfdugplpcosdptsoacoz",
+  dateStrings: true,
+  keepAliveInitialDelay:1000000000,
+  enableKeepAlive: true,
 };
+
 var mysql = mysql2.createConnection(config);
 app.use(express.urlencoded(true));
 app.listen(2024, function () {
